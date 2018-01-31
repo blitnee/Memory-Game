@@ -31,6 +31,19 @@ function shuffle(array) {
 // Shuffle Deck
 shuffle(deck);
 
+// Loop through deck and create cards
+const htmlDeck = document.querySelector('.deck');
+
+deck.forEach(function (card) {
+	let listItem = document.createElement("li");
+	listItem.className = "card";
+	let content = document.createElement("i");
+	content.className = "fa " + card;
+	listItem.appendChild(content);
+	htmlDeck.appendChild(listItem);
+});
+
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
