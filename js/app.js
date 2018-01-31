@@ -13,13 +13,6 @@ let icons = [
 // Clone icons to create matching pairs
 let deck = icons.concat(icons.slice(0));
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -35,6 +28,8 @@ function shuffle(array) {
     return array;
 }
 
+// Shuffle Deck
+shuffle(deck);
 
 /*
  * set up the event listener for a card. If a card is clicked:
