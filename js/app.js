@@ -10,6 +10,9 @@ let icons = [
 	'fa-bomb'
 ];
 
+// Clone icons to create matching pairs
+let deck = icons.concat(icons.slice(0));
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
