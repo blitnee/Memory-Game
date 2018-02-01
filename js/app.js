@@ -44,9 +44,23 @@ deck.forEach(function (card) {
 });
 
 
+// Display card icon on click
+function flip (card) {
+    event.stopPropagation();
+    event.target.classList.add("show");
+
+}
+
+
+htmlDeck.addEventListener('click', flip);
+
+
+
+
+
+
+
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
