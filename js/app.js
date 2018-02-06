@@ -57,6 +57,12 @@ htmlDeck.addEventListener('click', flip);
 
 
 
+// Validate only card clicks
+htmlDeck.addEventListener('click', function(event) {
+    if (event.target.nodeName === "LI") {
+        flips(event);
+    }
+});
 
 
 
