@@ -44,18 +44,36 @@ deck.forEach(function (card) {
 });
 
 
+let open = [];
+let matched = [];
+
 // Display card icon on click
-function flip (card) {
-    event.stopPropagation();
-    event.target.classList.add("show");
+function flips (event) {
+    event.target.classList.add('show');
+    let icon = event.target.lastElementChild;
 
+    // Validate card has not been clicked before and is not self
+    if (icon.parentElement.classList.contains('.show') || icon === open[0]) {
+        // Do nothing
+    } else {
+        open.push(icon);
+    }
+    
+    if (open.length === 2) {
+        if (open[0].className === open[1].className) {
+            open.forEach(function(elem) {
+                matched.push(elem);
+            })
+        } else {
+            // Add CSS annimation response
+            open.forEach(function(elem) {
+                elem.parentNode.classList.remove('show');
+            });
+        }
+
+    	open = [];
+    } 
 }
-
-
-htmlDeck.addEventListener('click', flip);
-
-
-
 
 // Validate only card clicks
 htmlDeck.addEventListener('click', function(event) {
