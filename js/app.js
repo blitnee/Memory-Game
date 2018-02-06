@@ -82,6 +82,15 @@ htmlDeck.addEventListener('click', function(event) {
     }
 });
 
+// Clear cards with .show
+function clear (array) {
+    array.forEach(function(elem) {
+        elem.parentNode.classList.remove('show');
+    });
+}
+
+
+
 
 
 /*
