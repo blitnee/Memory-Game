@@ -41,8 +41,12 @@ function shuffle(array) {
         });
     }
 
-// Loop through deck and create cards
-const htmlDeck = document.querySelector('.deck');
+    // Push matches out of open
+    function pushMatched(array) {
+        array.map(function(elem) {
+            matched.push(elem);
+        })
+    }
 
 deck.forEach(function (card) {
 	let listItem = document.createElement("li");
