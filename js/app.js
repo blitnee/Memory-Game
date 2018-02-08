@@ -158,9 +158,43 @@
         if (matched.length === htmlDeck.childElementCount) {
             win();
         }
+
         if (count === 0) {
             lose();
-        }
+        }   
+    }
+
+    function modalDisplay(message) {
+        let modal = document.querySelector('.modal');
+        modal.innerHTML = '';
+        modal.classList.remove('hide');
+
+        let score = document.createElement('ul');
+        score.innerHTML = stars.innerHTML;
+        score.className = "score";
+        if(score.innerHTML.trim() == "") {
+            score.innerHTML = 0;
+        };
+
+        let text = document.createElement('p');
+        text.innerText = message;
+        text.className = "modal-text";
+
+        let close = document.createElement('span');
+        close.innerHTML = 'x';
+        close.className = 'close';
+
+        let content = document.createElement('div');
+        content.className = "modal-content";
+        
+        content.appendChild(close);
+        content.appendChild(text);
+        content.appendChild(score);
+        modal.appendChild(content);
+
+        close.addEventListener('click', function () {
+            modal.classList.toggle('hide');
+        });
     }
 
     setBoard(count);
