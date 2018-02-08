@@ -103,12 +103,35 @@
             gameOver();
         }, 200);
     }
-});
 
-// Clear cards with .show
-function clear (array) {
-    array.forEach(function(elem) {
-        elem.parentNode.classList.remove('show');
+    // Reduce moves and stars on board
+    function reduceCount() {
+        count--;
+        stars.removeChild(stars.lastElementChild);
+        setMoves(count);
+    }
+
+    function setMoves(count) {
+        moves.innerHTML = count;
+    }
+
+    // Restart Game
+    function gameOver() {
+        htmlDeck.innerHTML = '';
+        stars.innerHTML = '';
+        count = 3;
+        setMoves(count);
+        setBoard(count);
+    }
+
+    // Call restart game on click
+    restart.addEventListener('click', gameOver);
+
+    // Validate only card clicks
+    htmlDeck.addEventListener('click', function(event) {
+        if (event.target.nodeName === "LI") {
+            flips(event);
+        }
     });
 
     // Display card icon on click
