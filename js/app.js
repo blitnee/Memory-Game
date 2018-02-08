@@ -1,28 +1,68 @@
-// List icons for deck - Feature for user input for icon list??
-let icons = [
-	'fa-diamond',
-	'fa-paper-plane-o',
-	'fa-anchor',
-	'fa-bolt',
-	'fa-cube',
-	'fa-leaf',
-	'fa-bicycle',
-	'fa-bomb'
-];
+(function playGame() {
 
-// Clone icons to create matching pairs
-let deck = icons.concat(icons.slice(0));
+    let open = [];
+    let matched = [];
+    let count = 3;
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    const htmlDeck = document.querySelector('.deck');
+    const restart = document.querySelector('.restart');
+    const moves = document.querySelector('.moves');
+    const stars = document.querySelector('.stars');
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+    function setBoard(count) {
+
+        // List icons for deck 
+        let icons = [
+            'fa-diamond',
+            'fa-paper-plane-o',
+            'fa-anchor',
+            'fa-bolt',
+            'fa-cube',
+            'fa-leaf',
+            'fa-bicycle',
+            'fa-bomb'
+        ];
+
+        // Clone icons to create matching pairs
+        let deck = icons.concat(icons.slice(0));
+
+        // Shuffle function from http://stackoverflow.com/a/2450976
+        function shuffle(array) {
+            let currentIndex = array.length, temporaryValue, randomIndex;
+
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
+        shuffle(deck);
+
+        // Loop thorugh deck and create HTML cards
+        deck.map(function (card) {
+            let listItem = document.createElement("li");
+            listItem.className = "card";
+            let content = document.createElement("i");
+            content.className = "fa " + card;
+            listItem.appendChild(content);
+            htmlDeck.appendChild(listItem);
+        });
+
+        // Build HTML stars on start
+        (function setStars(count) {
+            for (i = 0; i < count; i++) {
+                let star = document.createElement("li");
+                let content = document.createElement("i");
+                content.className = "fa fa-star";
+                star.appendChild(content);
+                stars.appendChild(star);
+            }
+        })(count);
     }
 
     // Clear cards with game play classes
