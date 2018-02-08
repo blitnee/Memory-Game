@@ -95,18 +95,6 @@
             gameOver();
         }, 200);
     }
-    
-    if (open.length === 2) {
-        if (open[0].className === open[1].className) {
-            open.forEach(function(elem) {
-                matched.push(elem);
-            })
-        } else {
-            // Add CSS annimation response
-            open.forEach(function(elem) {
-                elem.parentNode.classList.remove('show');
-            });
-        }
 
     	open = [];
     } 
