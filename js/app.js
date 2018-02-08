@@ -110,7 +110,43 @@ function clear (array) {
     array.forEach(function(elem) {
         elem.parentNode.classList.remove('show');
     });
-}
+
+    // Display card icon on click
+    function flips(event) {
+
+        event.target.classList.add('show', 'open');
+        let icon = event.target.lastElementChild;
+
+        // Validate card has not been clicked before and is not self
+        if (!icon.parentElement.classList.contains('.show') && icon !== open[0]) {
+            open.push(icon);
+            // Identify match or lost turn when two cards are opened
+            if (open.length === 2) {
+                if (open[0].className === open[1].className) {
+                    match(open);
+                    pushMatched(open);
+                } else {
+                    clear(open);
+                    reduceCount();
+                }
+                open = [];
+            } 
+        }
+        if (matched.length === htmlDeck.childElementCount) {
+            win();
+        }
+        if (count === 0) {
+            lose();
+        }
+    }
+
+    setBoard(count);
+
+})();
+
+
+
+
 
 
 
