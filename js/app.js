@@ -34,8 +34,12 @@ function shuffle(array) {
         }, 500);
     }
 
-// Shuffle Deck
-shuffle(deck);
+    // Show matched cards
+    function match(array) {
+        array.map(function (card) {
+            card.parentElement.classList.add('match');
+        });
+    }
 
 // Loop through deck and create cards
 const htmlDeck = document.querySelector('.deck');
