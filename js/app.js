@@ -91,7 +91,8 @@
     // Notify player of win and restart game
     function win() {
         setTimeout(function () {
-            window.alert('You win! Let\'s play again!');
+            let message = 'You win!';
+            modalDisplay(message);
             gameOver();
         }, 200);
     }
@@ -99,7 +100,8 @@
     // Notify player of loss and restart game
     function lose() {
         setTimeout(function () {
-            window.alert('Let\'s try that again...');
+            let message = 'Let\'s try that again...';
+            modalDisplay(message);
             gameOver();
         }, 200);
     }
