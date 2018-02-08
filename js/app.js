@@ -25,8 +25,14 @@ function shuffle(array) {
         array[randomIndex] = temporaryValue;
     }
 
-    return array;
-}
+    // Clear cards with game play classes
+    function clear(array) {
+        setTimeout(function () {
+            array.map(function(elem) {
+                elem.parentNode.classList.remove('show', 'open', 'match');
+            });
+        }, 500);
+    }
 
 // Shuffle Deck
 shuffle(deck);
