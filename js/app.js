@@ -88,29 +88,12 @@
         })
     }
 
-deck.forEach(function (card) {
-	let listItem = document.createElement("li");
-	listItem.className = "card";
-	let content = document.createElement("i");
-	content.className = "fa " + card;
-	listItem.appendChild(content);
-	htmlDeck.appendChild(listItem);
-});
-
-
-let open = [];
-let matched = [];
-
-// Display card icon on click
-function flips (event) {
-    event.target.classList.add('show');
-    let icon = event.target.lastElementChild;
-
-    // Validate card has not been clicked before and is not self
-    if (icon.parentElement.classList.contains('.show') || icon === open[0]) {
-        // Do nothing
-    } else {
-        open.push(icon);
+    // Notify player of win and restart game
+    function win() {
+        setTimeout(function () {
+            window.alert('You win! Let\'s play again!');
+            gameOver();
+        }, 200);
     }
     
     if (open.length === 2) {
