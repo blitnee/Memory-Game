@@ -96,14 +96,12 @@
         }, 200);
     }
 
-    	open = [];
-    } 
-}
-
-// Validate only card clicks
-htmlDeck.addEventListener('click', function(event) {
-    if (event.target.nodeName === "LI") {
-        flips(event);
+    // Notify player of loss and restart game
+    function lose() {
+        setTimeout(function () {
+            window.alert('Let\'s try that again...');
+            gameOver();
+        }, 200);
     }
 });
 
