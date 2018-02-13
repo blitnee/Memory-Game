@@ -166,6 +166,7 @@
         }   
     }
 
+    // Display message and score in modal
     function modalDisplay(message) {
         let modal = document.querySelector('.modal');
         modal.innerHTML = '';
