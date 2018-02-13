@@ -121,6 +121,7 @@
     function gameOver() {
         htmlDeck.innerHTML = '';
         stars.innerHTML = '';
+        matched = [];
         count = 3;
         setMoves(count);
         setBoard(count);
