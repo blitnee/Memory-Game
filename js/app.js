@@ -11,7 +11,6 @@
 
     function setBoard(count) {
 
-        // List icons for deck 
         let icons = [
             'fa-diamond',
             'fa-paper-plane-o',
@@ -74,7 +73,6 @@
         }, 500);
     }
 
-    // Show matched cards
     function match(array) {
         array.map(function (card) {
             card.parentElement.classList.add('match');
@@ -88,7 +86,6 @@
         })
     }
 
-    // Notify player of win and restart game
     function win() {
         setTimeout(function () {
             let message = 'You win!';
@@ -97,7 +94,6 @@
         }, 200);
     }
 
-    // Notify player of loss and restart game
     function lose() {
         setTimeout(function () {
             let message = 'Let\'s try that again...';
@@ -117,7 +113,6 @@
         moves.innerHTML = count;
     }
 
-    // Restart Game
     function gameOver() {
         htmlDeck.innerHTML = '';
         stars.innerHTML = '';
@@ -128,7 +123,6 @@
         resetTime();
     }
 
-    // Call restart game on click
     restart.addEventListener('click', gameOver);
 
     // Validate only card clicks
@@ -138,7 +132,7 @@
         }
     });
 
-    // Display card icon on click
+    // Workflow for card flip on click
     function flips(event) {
 
         event.target.classList.add('show', 'open');
@@ -174,7 +168,6 @@
         hours = 0,
         playerTime;
 
-    // Display timer
     function setTime (t) {
 
         function add() {
