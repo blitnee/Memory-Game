@@ -125,6 +125,7 @@
         count = 3;
         setMoves(count);
         setBoard(count);
+        resetTime();
     }
 
     // Call restart game on click
@@ -167,11 +168,60 @@
         }   
     }
 
-    // Display message and score in modal
+    const time = document.querySelector('.timer');
+    let seconds = 0, 
+        minutes = 0, 
+        hours = 0,
+        playerTime;
+
+    // Display timer
+    function setTime (t) {
+
+        function add() {
+            seconds++;
+            if (seconds >= 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes >= 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            time.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+            timer();
+            return playerTime = time.textContent;
+        }
+
+        function timer(t) {
+            t = setTimeout(add, 1000);
+        }
+        timer();
+    };
+    setTime();
+
+    function resetTime () {
+        seconds = 0;
+        minutes = 0
+        hours = 0;
+    };
+
+    // Display message, score, and time in modal
     function modalDisplay(message) {
+
+        const timer = document.querySelector('.timer');
+        timer.classList.toggle('hide');
+
         let modal = document.querySelector('.modal');
         modal.innerHTML = '';
         modal.classList.remove('hide');
+
+        let close = document.createElement('span');
+        close.innerHTML = 'x';
+        close.className = 'close';
+
+        let text = document.createElement('p');
+        text.innerText = message;
+        text.className = "modal-text";
 
         let score = document.createElement('ul');
         score.innerHTML = stars.innerHTML;
@@ -180,13 +230,8 @@
             score.innerHTML = 0;
         };
 
-        let text = document.createElement('p');
-        text.innerText = message;
-        text.className = "modal-text";
-
-        let close = document.createElement('span');
-        close.innerHTML = 'x';
-        close.className = 'close';
+        let time = document.createElement('span');
+        time.innerHTML = playerTime;
 
         let content = document.createElement('div');
         content.className = "modal-content";
@@ -194,12 +239,16 @@
         content.appendChild(close);
         content.appendChild(text);
         content.appendChild(score);
+        content.appendChild(time);
         modal.appendChild(content);
 
         close.addEventListener('click', function () {
             modal.classList.toggle('hide');
+            resetTime();
+            timer.classList.toggle('hide');
         });
-    }
+
+    };
 
     setBoard(count);
 
