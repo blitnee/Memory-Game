@@ -208,8 +208,7 @@
     // Display message, score, and time in modal
     function modalDisplay(message) {
 
-        const timer = document.querySelector('.timer');
-        timer.classList.toggle('hide');
+        time.classList.toggle('hide');
 
         let modal = document.querySelector('.modal');
         modal.innerHTML = '';
@@ -230,8 +229,8 @@
             score.innerHTML = 0;
         };
 
-        let time = document.createElement('span');
-        time.innerHTML = playerTime;
+        let playTime = document.createElement('span');
+        playTime.innerHTML = playerTime;
 
         let content = document.createElement('div');
         content.className = "modal-content";
@@ -239,13 +238,13 @@
         content.appendChild(close);
         content.appendChild(text);
         content.appendChild(score);
-        content.appendChild(time);
+        content.appendChild(playTime);
         modal.appendChild(content);
 
         close.addEventListener('click', function () {
             modal.classList.toggle('hide');
             resetTime();
-            timer.classList.toggle('hide');
+            time.classList.toggle('hide');
         });
 
     };
