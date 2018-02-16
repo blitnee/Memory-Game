@@ -1,13 +1,13 @@
 (function playGame() {
 
-    let open = [];
-    let matched = [];
-    let count = 3;
+    let open = [],
+        matched = [],
+        count = 3;
 
-    const htmlDeck = document.querySelector('.deck');
-    const restart = document.querySelector('.restart');
-    const moves = document.querySelector('.moves');
-    const stars = document.querySelector('.stars');
+    const htmlDeck = document.querySelector('.deck'),
+          restart = document.querySelector('.restart'),
+          moves = document.querySelector('.moves'),
+          stars = document.querySelector('.stars');
 
     function setBoard(count) {
 
@@ -44,9 +44,9 @@
 
         // Loop thorugh deck and create HTML cards
         deck.map(function (card) {
-            let listItem = document.createElement("li");
+            let listItem = document.createElement("li"),
+                content = document.createElement("i");
             listItem.className = "card";
-            let content = document.createElement("i");
             content.className = "fa " + card;
             listItem.appendChild(content);
             htmlDeck.appendChild(listItem);
@@ -55,8 +55,8 @@
         // Build HTML stars on start
         (function setStars(count) {
             for (i = 0; i < count; i++) {
-                let star = document.createElement("li");
-                let content = document.createElement("i");
+                let star = document.createElement("li"),
+                    content = document.createElement("i");
                 content.className = "fa fa-star";
                 star.appendChild(content);
                 stars.appendChild(star);
@@ -192,7 +192,7 @@
 
     function resetTime () {
         seconds = 0;
-        minutes = 0
+        minutes = 0;
         hours = 0;
     };
 
@@ -201,29 +201,30 @@
 
         time.classList.toggle('hide');
 
-        let modal = document.querySelector('.modal');
+        let modal = document.querySelector('.modal'),
+            close = document.createElement('span'),
+            text = document.createElement('p'),
+            score = document.createElement('ul'),
+            playTime = document.createElement('span'),
+            content = document.createElement('div');
+        
         modal.innerHTML = '';
         modal.classList.remove('hide');
 
-        let close = document.createElement('span');
         close.innerHTML = 'x';
         close.className = 'close';
 
-        let text = document.createElement('p');
         text.innerText = message;
         text.className = "modal-text";
 
-        let score = document.createElement('ul');
         score.innerHTML = stars.innerHTML;
         score.className = "score";
         if(score.innerHTML.trim() == "") {
             score.innerHTML = 0;
         };
 
-        let playTime = document.createElement('span');
         playTime.innerHTML = playerTime;
 
-        let content = document.createElement('div');
         content.className = "modal-content";
         
         content.appendChild(close);
