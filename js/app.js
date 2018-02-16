@@ -10,6 +10,8 @@
           stars = document.querySelector('.stars');
 
     function setBoard(count) {
+        htmlDeck.innerHTML = '';
+        stars.innerHTML = '';
 
         let icons = [
             'fa-diamond',
@@ -112,8 +114,8 @@
     }
 
     function gameOver() {
-        htmlDeck.innerHTML = '';
-        stars.innerHTML = '';
+        //htmlDeck.innerHTML = '';
+        //stars.innerHTML = '';
         matched = [];
         count = 3;
         setMoves(count);
@@ -153,9 +155,7 @@
         }
         if (matched.length === htmlDeck.childElementCount) {
             winLose(win);
-        }
-
-        if (count === 0) {
+        } else if (count === 0) {
             winLose();
         }   
     }
