@@ -86,21 +86,19 @@
         })
     }
 
-    function win() {
-        setTimeout(function () {
-            let message = 'You win!';
-            modalDisplay(message);
-            gameOver();
-        }, 200);
-    }
+    function winLose(win) {
 
-    function lose() {
+        let message;
+        if (win){
+            message = 'You win!';
+        } else {
+            message = 'Let\'s try that again...';
+        }
         setTimeout(function () {
-            let message = 'Let\'s try that again...';
             modalDisplay(message);
             gameOver();
         }, 200);
-    }
+    };
 
     // Reduce moves and stars on board
     function reduceCount() {
@@ -154,11 +152,11 @@
             } 
         }
         if (matched.length === htmlDeck.childElementCount) {
-            win();
+            winLose(win);
         }
 
         if (count === 0) {
-            lose();
+            winLose();
         }   
     }
 
