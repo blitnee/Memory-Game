@@ -86,7 +86,7 @@ h1 {
  */
 
 .score-panel {
-    text-align: left;
+    text-align: center;
     width: 345px;
     margin-bottom: 10px;
 }
@@ -103,13 +103,17 @@ h1 {
     display: inline-block;
 }
 
+.score-block {
+    float: left;
+}
+
 .score-panel .restart {
     float: right;
     cursor: pointer;
 }
 
-.timer {
-    padding-left: 1.5em;
+.timer::before {
+    content: "Time:  ";
 }
 
 /*
