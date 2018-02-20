@@ -89,13 +89,8 @@
     }
 
     function winLose(win) {
+        let message = (win ? 'You win!' : 'Let\'s try that again...');
 
-        let message;
-        if (win){
-            message = 'You win!';
-        } else {
-            message = 'Let\'s try that again...';
-        }
         setTimeout(function () {
             modalDisplay(message);
             gameOver();
@@ -127,9 +122,7 @@
 
     // Validate only card clicks
     htmlDeck.addEventListener('click', function(event) {
-        if (event.target.nodeName === "LI") {
-            flips(event);
-        }
+        (event.target.nodeName === "LI") ? flips(event) : false;
     });
 
     // Workflow for card flip on click
@@ -153,11 +146,9 @@
                 open = [];
             } 
         }
-        if (matched.length === htmlDeck.childElementCount) {
-            winLose(win);
-        } else if (count === 0) {
-            winLose();
-        }   
+
+        (matched.length === htmlDeck.childElementCount) ? winLose(true) : false;
+        (count === 0) ? winLose() : false;
     }
 
     const time = document.querySelector('.timer');
@@ -219,9 +210,7 @@
 
         score.innerHTML = stars.innerHTML;
         score.className = "score";
-        if(score.innerHTML.trim() == "") {
-            score.innerHTML = 0;
-        };
+        (score.innerHTML.trim() == "") ? (score.innerHTML = 0) : false;
 
         playTime.innerHTML = playerTime;
 
