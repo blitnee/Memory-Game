@@ -5,10 +5,10 @@
         count = 3;
 
     const htmlDeck = document.querySelector('.deck'),
-          restart = document.querySelector('.restart'),
-          moves = document.querySelector('.moves'),
-          stars = document.querySelector('.stars'),
-          time = document.querySelector('.timer');
+        restart = document.querySelector('.restart'),
+        moves = document.querySelector('.moves'),
+        stars = document.querySelector('.stars'),
+        time = document.querySelector('.timer');
 
     function setBoard(count) {
         htmlDeck.innerHTML = '';
@@ -30,7 +30,8 @@
 
         // Shuffle function from http://stackoverflow.com/a/2450976
         function shuffle(array) {
-            let currentIndex = array.length, temporaryValue, randomIndex;
+            let currentIndex = array.length,
+                temporaryValue, randomIndex;
 
             while (currentIndex !== 0) {
                 randomIndex = Math.floor(Math.random() * currentIndex);
@@ -46,7 +47,7 @@
         shuffle(deck);
 
         // Loop thorugh deck and create HTML cards
-        deck.map(function (card) {
+        deck.map(function(card) {
             let listItem = document.createElement("li"),
                 content = document.createElement("i");
             listItem.className = "card";
@@ -69,7 +70,7 @@
 
     // Clear cards with game play classes
     function clear(array) {
-        setTimeout(function () {
+        setTimeout(function() {
             array.map(function(elem) {
                 elem.parentNode.classList.remove('show', 'open', 'match');
             });
@@ -77,7 +78,7 @@
     }
 
     function match(array) {
-        array.map(function (card) {
+        array.map(function(card) {
             card.parentElement.classList.add('match');
         });
     }
@@ -92,7 +93,7 @@
     function winLose(win) {
         let message = (win ? 'You win!' : 'Let\'s try that again...');
 
-        setTimeout(function () {
+        setTimeout(function() {
             modalDisplay(message);
             gameOver();
         }, 200);
@@ -110,8 +111,6 @@
     }
 
     function gameOver() {
-        //htmlDeck.innerHTML = '';
-        //stars.innerHTML = '';
         matched = [];
         count = 3;
         setMoves(count);
@@ -123,7 +122,7 @@
 
     // Validate only card clicks
     htmlDeck.addEventListener('click', function(event) {
-        (event.target.nodeName === "LI") ? flips(event) : false;
+        (event.target.nodeName === "LI") ? flips(event): false;
     });
 
     // Workflow for card flip on click
@@ -145,19 +144,19 @@
                     reduceCount();
                 }
                 open = [];
-            } 
+            }
         }
 
-        (matched.length === htmlDeck.childElementCount) ? winLose(true) : false;
-        (count === 0) ? winLose() : false;
+        (matched.length === htmlDeck.childElementCount) ? winLose(true): false;
+        (count === 0) ? winLose(): false;
     }
 
-    let seconds = 0, 
-        minutes = 0, 
+    let seconds = 0,
+        minutes = 0,
         hours = 0,
         playerTime;
 
-    function setTime (t) {
+    function setTime(t) {
         function add() {
             seconds++;
             if (seconds >= 60) {
@@ -180,7 +179,7 @@
     };
     setTime();
 
-    function resetTime () {
+    function resetTime() {
         seconds = 0;
         minutes = 0;
         hours = 0;
@@ -197,7 +196,7 @@
             score = document.createElement('ul'),
             playTime = document.createElement('span'),
             content = document.createElement('div');
-        
+
         modal.innerHTML = '';
         modal.classList.remove('hide');
 
@@ -214,14 +213,14 @@
         playTime.innerHTML = playerTime;
 
         content.className = "modal-content";
-        
+
         content.appendChild(close);
         content.appendChild(text);
         content.appendChild(score);
         content.appendChild(playTime);
         modal.appendChild(content);
 
-        close.addEventListener('click', function () {
+        close.addEventListener('click', function() {
             modal.classList.toggle('hide');
             resetTime();
             time.classList.toggle('hide');
