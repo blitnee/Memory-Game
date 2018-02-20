@@ -1,20 +1,17 @@
 # Memory Game Project
 
-## Table of Contents
+[**Play Game**](https://blitnee.github.io/Memory-Game/)
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+![Game Board](./img/game.png)
+
+## About
+This game was created for a project in the Udacity Front End Developer Nanodegree.
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+1. Click on any two cards to find a match.
+2. If a match has been found, the cards set will remain exposed.
+3. If a match has not been found, the clicked cards will flip back to face down.
+4. When all cards have been matched, the player wins the game.
+5. A player can get three wrong answers before game over.
+6. Players can restart the game at any time.
