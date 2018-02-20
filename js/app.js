@@ -7,7 +7,8 @@
     const htmlDeck = document.querySelector('.deck'),
           restart = document.querySelector('.restart'),
           moves = document.querySelector('.moves'),
-          stars = document.querySelector('.stars');
+          stars = document.querySelector('.stars'),
+          time = document.querySelector('.timer');
 
     function setBoard(count) {
         htmlDeck.innerHTML = '';
@@ -151,14 +152,12 @@
         (count === 0) ? winLose() : false;
     }
 
-    const time = document.querySelector('.timer');
     let seconds = 0, 
         minutes = 0, 
         hours = 0,
         playerTime;
 
     function setTime (t) {
-
         function add() {
             seconds++;
             if (seconds >= 60) {
