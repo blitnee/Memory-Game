@@ -1,18 +1,33 @@
 (function playGame() {
 
-    let open = [],
-        matched = [],
-        count = 3;
+    const game = {
+        open: [],
+        matched: [],
+        count: 3,
+        ui: {
+            htmlDeck: document.querySelector('.deck'),
+            restart: document.querySelector('.restart'),
+            moves: document.querySelector('.moves'),
+            stars: document.querySelector('.stars'),
+            time: document.querySelector('.timer'),
+        },
+        seconds: 0,
+        minutes: 0,
+        hours: 0,
+        playerTime: null,
 
-    const htmlDeck = document.querySelector('.deck'),
-        restart = document.querySelector('.restart'),
-        moves = document.querySelector('.moves'),
-        stars = document.querySelector('.stars'),
-        time = document.querySelector('.timer');
+    }
 
     function setBoard(count) {
-        htmlDeck.innerHTML = '';
-        stars.innerHTML = '';
+        game.ui.htmlDeck.innerHTML = '';
+        game.ui.stars.innerHTML = '';
+
+        game.ui.restart.addEventListener('click', gameOver);
+
+        // Validate only card clicks
+        game.ui.htmlDeck.addEventListener('click', function(event) {
+            (event.target.nodeName === "LI") ? flips(event): false;
+        });
 
         let icons = [
             'fa-diamond',
@@ -53,7 +68,7 @@
             listItem.className = "card";
             content.className = "fa " + card;
             listItem.appendChild(content);
-            htmlDeck.appendChild(listItem);
+            game.ui.htmlDeck.appendChild(listItem);
         });
 
         // Build HTML stars on start
@@ -63,9 +78,9 @@
                     content = document.createElement("i");
                 content.className = "fa fa-star";
                 star.appendChild(content);
-                stars.appendChild(star);
+                game.ui.stars.appendChild(star);
             }
-        })(count);
+        })(game.count);
     }
 
     // Clear cards with game play classes
@@ -86,7 +101,7 @@
     // Push matches out of open
     function pushMatched(array) {
         array.map(function(elem) {
-            matched.push(elem);
+            game.matched.push(elem);
         })
     }
 
@@ -101,29 +116,22 @@
 
     // Reduce moves and stars on board
     function reduceCount() {
-        count--;
-        stars.removeChild(stars.lastElementChild);
-        setMoves(count);
+        game.count--;
+        game.ui.stars.removeChild(game.ui.stars.lastElementChild);
+        setMoves(game.count);
     }
 
     function setMoves(count) {
-        moves.innerHTML = count;
+        game.ui.moves.innerHTML = game.count;
     }
 
     function gameOver() {
-        matched = [];
-        count = 3;
-        setMoves(count);
-        setBoard(count);
+        game.matched = [];
+        game.count = 3;
+        setMoves(game.count);
+        setBoard(game.count);
         resetTime();
     }
-
-    restart.addEventListener('click', gameOver);
-
-    // Validate only card clicks
-    htmlDeck.addEventListener('click', function(event) {
-        (event.target.nodeName === "LI") ? flips(event): false;
-    });
 
     // Workflow for card flip on click
     function flips(event) {
@@ -132,44 +140,39 @@
         let icon = event.target.lastElementChild;
 
         // Validate card has not been clicked before and is not self
-        if (!icon.parentElement.classList.contains('.show') && icon !== open[0]) {
-            open.push(icon);
+        if (!icon.parentElement.classList.contains('.show') && icon !== game.open[0]) {
+            game.open.push(icon);
             // Identify match or lost turn when two cards are opened
-            if (open.length === 2) {
-                if (open[0].className === open[1].className) {
-                    match(open);
-                    pushMatched(open);
+            if (game.open.length === 2) {
+                if (game.open[0].className === game.open[1].className) {
+                    match(game.open);
+                    pushMatched(game.open);
                 } else {
-                    clear(open);
+                    clear(game.open);
                     reduceCount();
                 }
-                open = [];
+                game.open = [];
             }
         }
 
-        (matched.length === htmlDeck.childElementCount) ? winLose(true): false;
-        (count === 0) ? winLose(): false;
+        (game.matched.length === game.ui.htmlDeck.childElementCount) ? winLose(true): false;
+        (game.count === 0) ? winLose(): false;
     }
-
-    let seconds = 0,
-        minutes = 0,
-        hours = 0,
-        playerTime;
 
     function setTime(t) {
         function add() {
-            seconds++;
-            if (seconds >= 60) {
-                seconds = 0;
-                minutes++;
-                if (minutes >= 60) {
-                    minutes = 0;
-                    hours++;
+            game.seconds++;
+            if (game.seconds >= 60) {
+                game.seconds = 0;
+                game.minutes++;
+                if (game.minutes >= 60) {
+                    game.minutes = 0;
+                    game.hours++;
                 }
             }
-            time.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+            game.ui.time.textContent = (game.hours ? (game.hours > 9 ? game.hours : "0" + game.hours) : "00") + ":" + (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
             timer();
-            return playerTime = time.textContent;
+            return game.playerTime = game.ui.time.textContent;
         }
 
         function timer(t) {
@@ -180,15 +183,15 @@
     setTime();
 
     function resetTime() {
-        seconds = 0;
-        minutes = 0;
-        hours = 0;
+        game.seconds = 0;
+        game.minutes = 0;
+        game.hours = 0;
     };
 
     // Display message, score, and time in modal
     function modalDisplay(message) {
 
-        time.classList.toggle('hide');
+        game.ui.time.classList.toggle('hide');
 
         let modal = document.querySelector('.modal'),
             close = document.createElement('span'),
@@ -206,11 +209,11 @@
         text.innerText = message;
         text.className = "modal-text";
 
-        score.innerHTML = stars.innerHTML;
+        score.innerHTML = game.ui.stars.innerHTML;
         score.className = "score";
         (score.innerHTML.trim() == "") ? (score.innerHTML = 0) : false;
 
-        playTime.innerHTML = playerTime;
+        playTime.innerHTML = game.playerTime;
 
         content.className = "modal-content";
 
@@ -223,11 +226,11 @@
         close.addEventListener('click', function() {
             modal.classList.toggle('hide');
             resetTime();
-            time.classList.toggle('hide');
+            game.ui.time.classList.toggle('hide');
         });
 
     };
 
-    setBoard(count);
+    setBoard(game.count);
 
 })();
