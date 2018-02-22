@@ -41,7 +41,7 @@
         ];
 
         // Clone icons to create matching pairs
-        let deck = icons.concat(icons.slice(0));
+        let deck = icons.concat(icons);
 
         // Shuffle function from http://stackoverflow.com/a/2450976
         function shuffle(array) {
