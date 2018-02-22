@@ -135,7 +135,6 @@
 
     // Workflow for card flip on click
     function flips(event) {
-
         event.target.classList.add('show', 'open');
         let icon = event.target.lastElementChild;
 
@@ -160,6 +159,7 @@
     }
 
     function setTime(t) {
+
         function add() {
             game.seconds++;
             if (game.seconds >= 60) {
@@ -190,7 +190,6 @@
 
     // Display message, score, and time in modal
     function modalDisplay(message) {
-
         game.ui.time.classList.toggle('hide');
 
         let modal = document.querySelector('.modal'),
@@ -230,7 +229,6 @@
         });
 
     };
-
     setBoard(game.count);
 
 })();
