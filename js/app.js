@@ -166,10 +166,11 @@
                 game.minutes++;
                 if (game.minutes >= 60) {
                     game.minutes = 0;
-                    game.hours++;
                 }
             }
-            game.ui.time.textContent = (game.hours ? (game.hours > 9 ? game.hours : "0" + game.hours) : "00") + ":" + (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
+            game.ui.time.textContent = (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
+            ((game.minutes === 00 && game.seconds === 31) || (game.minutes === 00 && game.seconds === 46) || (game.minutes === 01 && game.seconds === 01)) ? game.ui.stars.removeChild(game.ui.stars.lastElementChild) : false;
+            (game.minutes === 02) ? winLose() : false;
             timer();
             return game.playerTime = game.ui.time.textContent;
         }
