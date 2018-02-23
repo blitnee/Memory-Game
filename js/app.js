@@ -136,10 +136,10 @@
         event.target.classList.add('show', 'open');
         let icon = event.target.lastElementChild;
 
-        // Validate card has not been clicked before and is not self
-        if (!icon.parentElement.classList.contains('.show') && icon !== game.open[0]) {
+        // Validate card has not been matched and is not self
+        if (!icon.parentElement.classList.contains('match') && icon !== game.open[0]) {
             game.open.push(icon);
-            // Identify match or lost turn when two cards are opened
+            // Identify match when two cards are opened
             if (game.open.length === 2) {
                 if (game.open[0].className === game.open[1].className) {
                     match(game.open);
