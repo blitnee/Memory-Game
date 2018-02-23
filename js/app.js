@@ -3,7 +3,7 @@
     const game = {
         open: [],
         matched: [],
-        count: 3,
+        moveCount: 0,
         ui: {
             htmlDeck: document.querySelector('.deck'),
             restart: document.querySelector('.restart'),
@@ -18,7 +18,7 @@
 
     }
 
-    function setBoard(count) {
+    function setBoard() {
         game.ui.htmlDeck.innerHTML = '';
         game.ui.stars.innerHTML = '';
 
@@ -72,15 +72,15 @@
         });
 
         // Build HTML stars on start
-        (function setStars(count) {
-            for (i = 0; i < count; i++) {
+        (function setStars() {
+            for (i = 0; i < 3; i++) {
                 let star = document.createElement("li"),
                     content = document.createElement("i");
                 content.className = "fa fa-star";
                 star.appendChild(content);
                 game.ui.stars.appendChild(star);
             }
-        })(game.count);
+        })();
     }
 
     // Clear cards with game play classes
@@ -114,22 +114,20 @@
         }, 200);
     };
 
-    // Reduce moves and stars on board
-    function reduceCount() {
-        game.count--;
-        game.ui.stars.removeChild(game.ui.stars.lastElementChild);
-        setMoves(game.count);
+    function moveCounter() {
+        game.moveCount++;
+        setMoves(game.moveCount);
     }
 
-    function setMoves(count) {
-        game.ui.moves.innerHTML = game.count;
+    function setMoves(moves) {
+        game.ui.moves.innerHTML = game.moveCount; // move to game block?
     }
 
     function gameOver() {
         game.matched = [];
-        game.count = 3;
-        setMoves(game.count);
-        setBoard(game.count);
+        game.moveCount = 0;
+        setMoves(game.moveCount);
+        setBoard();
         resetTime();
     }
 
@@ -148,14 +146,15 @@
                     pushMatched(game.open);
                 } else {
                     clear(game.open);
-                    reduceCount();
+                    moveCounter();
                 }
                 game.open = [];
             }
         }
 
         (game.matched.length === game.ui.htmlDeck.childElementCount) ? winLose(true): false;
-        (game.count === 0) ? winLose(): false;
+        (game.moves === 6) ? winLose(): false;
+
     }
 
     function setTime(t) {
@@ -229,6 +228,6 @@
         });
 
     };
-    setBoard(game.count);
+    setBoard();
 
 })();
