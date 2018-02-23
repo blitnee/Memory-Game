@@ -49,7 +49,11 @@
         game.ui.moves.innerHTML = 0;
         game.ui.time.innerHTML = '00:00';
 
-        game.ui.restart.addEventListener('click', gameOver);
+        game.matched = [];
+        game.moveCount = 0;
+        setMoves(game.moveCount);
+
+        game.ui.restart.addEventListener('click', setBoard);
 
         game.ui.htmlDeck.addEventListener('click', setTimer);
 
@@ -158,13 +162,6 @@
         game.ui.moves.innerHTML = game.moveCount; // move to game block?
     }
 
-    function gameOver() {
-        game.matched = [];
-        game.moveCount = 0;
-        setMoves(game.moveCount);
-        setBoard();
-    }
-
     // Workflow for card flip on click
     function flips(event) {
         event.target.classList.add('show', 'open');
@@ -227,7 +224,7 @@
 
         close.addEventListener('click', function() {
             modal.classList.toggle('hide');
-            gameOver();
+            setBoard();
             game.ui.time.classList.toggle('hide');
         });
 
