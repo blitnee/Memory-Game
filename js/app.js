@@ -212,14 +212,19 @@
         score.className = "score";
         (score.innerHTML.trim() == "") ? (score.innerHTML = 0) : false;
 
-        playTime.innerHTML = game.playerTime;
+        time.innerHTML = game.playerTime;
+        time.className = 'time';
+
+        moves.innerHTML = game.moveCount;
+        moves.className = 'moves';
 
         content.className = "modal-content";
 
         content.appendChild(close);
         content.appendChild(text);
         content.appendChild(score);
-        content.appendChild(playTime);
+        content.appendChild(time);
+        content.appendChild(moves);
         modal.appendChild(content);
 
         close.addEventListener('click', function() {
