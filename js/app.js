@@ -188,17 +188,19 @@
 
     }
 
-    // Display message, score, and time in modal
     function modalDisplay(message) {
-        // TODO: Ask Player to play again (y/n function)
+
         clearTimeout(game.t);
-        game.ui.time.classList.toggle('hide');
 
         let modal = document.querySelector('.modal'),
             text = document.createElement('p'),
             score = document.createElement('ul'),
             time = document.createElement('p'),
             moves = document.createElement('p'),
+            buttons = document.createElement('span'),
+            ask = document.createElement('p'),
+            yes = document.createElement('button'),
+            no = document.createElement('button'),
             content = document.createElement('div');
 
         modal.innerHTML = '';
@@ -217,23 +219,35 @@
         moves.innerHTML = game.moveCount;
         moves.className = 'moves';
 
+        buttons.className = 'buttons';
+
+        ask.innerHTML = 'Play again?';
+        ask.className = 'ask';
+
+        yes.innerHTML = 'Yeah';
+        yes.classList.add("yes", "button");
+
+        no.innerHTML = 'Nah';
+        no.classList.add('no', 'button');
+
         content.className = "modal-content";
 
         content.appendChild(text);
         content.appendChild(score);
         content.appendChild(time);
         content.appendChild(moves);
+        buttons.appendChild(ask);
+        buttons.appendChild(yes);
+        buttons.appendChild(no);
+        content.appendChild(buttons);
         modal.appendChild(content);
 
-        // TODO: create two buttons (yes/no)
-        //      if yes clicked -> set board
-        //      if no, just hide modal
-
-        //close.addEventListener('click', function() {
-            //modal.classList.toggle('hide');
-            //setBoard();
-            //game.ui.time.classList.toggle('hide');
-        //});
+        yes.addEventListener('click', function() {
+            setBoard();
+        })
+        buttons.addEventListener('click', function() {
+            modal.classList.toggle('hide');
+        });
 
     };
     setBoard();

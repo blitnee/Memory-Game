@@ -170,3 +170,11 @@ h1 {
 .moves:before {
   content: 'Moves:  ';
 }
+
+.button {
+  font-size: 15px;
+  border-radius: 8px;
+  width: 90px;
+  padding: .3em;
+  margin: 0.2em;
+}
