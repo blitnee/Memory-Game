@@ -15,14 +15,43 @@
         minutes: 0,
         hours: 0,
         playerTime: null,
-
+        t: null,
     }
+
+    function setTimer() {
+        game.ui.htmlDeck.removeEventListener('click', setTimer);
+
+        function add() {
+            game.seconds++;
+            if (game.seconds >= 60) {
+                game.seconds = 0;
+                game.minutes++;
+                if (game.minutes >= 60) {
+                    game.minutes = 0;
+                }
+            }
+            game.ui.time.textContent = (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
+            ((game.minutes === 00 && game.seconds === 31) || (game.minutes === 00 && game.seconds === 46) || (game.minutes === 01 && game.seconds === 01)) ? game.ui.stars.removeChild(game.ui.stars.lastElementChild) : false;
+            (game.minutes === 02) ? winLose() : false;
+            timer();
+            return game.playerTime = game.ui.time.textContent;
+        }
+
+        function timer() {
+            game.t = setTimeout(add, 1000);
+        }
+        timer();
+    };
 
     function setBoard() {
         game.ui.htmlDeck.innerHTML = '';
         game.ui.stars.innerHTML = '';
+        game.ui.moves.innerHTML = 0;
+        game.ui.time.innerHTML = '00:00';
 
         game.ui.restart.addEventListener('click', gameOver);
+
+        game.ui.htmlDeck.addEventListener('click', setTimer);
 
         // Validate only card clicks
         game.ui.htmlDeck.addEventListener('click', function(event) {
@@ -81,6 +110,13 @@
                 game.ui.stars.appendChild(star);
             }
         })();
+
+        (function resetTime() {
+            game.seconds = 0;
+            game.minutes = 0;
+            game.hours = 0;
+        })();
+
     }
 
     // Clear cards with game play classes
@@ -110,7 +146,6 @@
 
         setTimeout(function() {
             modalDisplay(message);
-            gameOver();
         }, 200);
     };
 
@@ -128,7 +163,6 @@
         game.moveCount = 0;
         setMoves(game.moveCount);
         setBoard();
-        resetTime();
     }
 
     // Workflow for card flip on click
@@ -224,7 +258,7 @@
 
         close.addEventListener('click', function() {
             modal.classList.toggle('hide');
-            resetTime();
+            gameOver();
             game.ui.time.classList.toggle('hide');
         });
 
