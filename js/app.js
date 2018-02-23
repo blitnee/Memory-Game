@@ -190,20 +190,19 @@
 
     // Display message, score, and time in modal
     function modalDisplay(message) {
+        // TODO: Ask Player to play again (y/n function)
+        clearTimeout(game.t);
         game.ui.time.classList.toggle('hide');
 
         let modal = document.querySelector('.modal'),
-            close = document.createElement('span'),
             text = document.createElement('p'),
             score = document.createElement('ul'),
-            playTime = document.createElement('span'),
+            time = document.createElement('p'),
+            moves = document.createElement('p'),
             content = document.createElement('div');
 
         modal.innerHTML = '';
         modal.classList.remove('hide');
-
-        close.innerHTML = 'x';
-        close.className = 'close';
 
         text.innerText = message;
         text.className = "modal-text";
@@ -220,18 +219,21 @@
 
         content.className = "modal-content";
 
-        content.appendChild(close);
         content.appendChild(text);
         content.appendChild(score);
         content.appendChild(time);
         content.appendChild(moves);
         modal.appendChild(content);
 
-        close.addEventListener('click', function() {
-            modal.classList.toggle('hide');
-            setBoard();
-            game.ui.time.classList.toggle('hide');
-        });
+        // TODO: create two buttons (yes/no)
+        //      if yes clicked -> set board
+        //      if no, just hide modal
+
+        //close.addEventListener('click', function() {
+            //modal.classList.toggle('hide');
+            //setBoard();
+            //game.ui.time.classList.toggle('hide');
+        //});
 
     };
     setBoard();
