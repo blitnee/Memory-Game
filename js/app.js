@@ -50,7 +50,6 @@
             'fa-bomb'
         ];
 
-        // Clone icons to create matching pairs
         let deck = icons.concat(icons);
 
         // Shuffle function from http://stackoverflow.com/a/2450976
@@ -81,7 +80,6 @@
             game.ui.htmlDeck.appendChild(listItem);
         });
 
-        // Build HTML stars on start
         (function setStars() {
             for (i = 0; i < 3; i++) {
                 let star = document.createElement("li"),
@@ -139,7 +137,6 @@
         });
     }
 
-    // Push matches out of open
     function pushMatched(array) {
         array.map(function(elem) {
             game.matched.push(elem);
