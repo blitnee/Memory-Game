@@ -15,3 +15,7 @@ This game was created for a project in the Udacity Front End Developer Nanodegre
 4. When all cards have been matched, the player wins the game.
 5. A player can get three wrong answers before game over.
 6. Players can restart the game at any time.
+
+## Code Dependencies
+
+The app has no code dependencies, and was built using HTML, CSS, and JS.
