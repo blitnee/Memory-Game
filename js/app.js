@@ -19,6 +19,7 @@
     }
 
     function setBoard() {
+
         clearTimeout(game.t);
 
         game.ui.htmlDeck.innerHTML = '';
@@ -70,7 +71,6 @@
 
         shuffle(deck);
 
-        // Loop thorugh deck and create HTML cards
         deck.map(function(card) {
             let listItem = document.createElement("li"),
                 content = document.createElement("i");
