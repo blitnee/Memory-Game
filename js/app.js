@@ -157,32 +157,32 @@
     }
 
     function setMoves(moves) {
-        game.ui.moves.innerHTML = game.moveCount; // move to game block?
+        game.ui.moves.innerHTML = game.moveCount;
     }
 
-    // Workflow for card flip on click
+    function checkMatch(){
+        if (game.open.length === 2) {
+            if (game.open[0].className === game.open[1].className) {
+                match(game.open);
+                pushMatched(game.open);
+            } else {
+                clear(game.open);
+                moveCounter();
+            }
+            game.open = [];
+        }
+    }
+
     function flips(event) {
-        event.target.classList.add('show', 'open');
+        event.target.classList.add('open');
         let icon = event.target.lastElementChild;
 
-        // Validate card has not been matched and is not self
         if (!icon.parentElement.classList.contains('match') && icon !== game.open[0]) {
             game.open.push(icon);
-            // Identify match when two cards are opened
-            if (game.open.length === 2) {
-                if (game.open[0].className === game.open[1].className) {
-                    match(game.open);
-                    pushMatched(game.open);
-                } else {
-                    clear(game.open);
-                    moveCounter();
-                }
-                game.open = [];
-            }
+            checkMatch();
         }
 
         (game.matched.length === game.ui.htmlDeck.childElementCount) ? winLose(true): false;
-        (game.moves === 6) ? winLose(): false;
 
     }
 
