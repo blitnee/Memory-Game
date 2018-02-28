@@ -13,34 +13,9 @@
         },
         seconds: 0,
         minutes: 0,
-        hours: 0,
         playerTime: 0,
         t: 0,
-    }
-
-    function setBoard() {
-
-        clearTimeout(game.t);
-
-        game.ui.htmlDeck.innerHTML = '';
-        game.ui.stars.innerHTML = '';
-        game.ui.moves.innerHTML = 0;
-        game.ui.time.innerHTML = '00:00';
-
-        game.matched = [];
-        game.moveCount = 0;
-        setMoves(game.moveCount);
-
-        game.ui.restart.addEventListener('click', setBoard);
-
-        game.ui.htmlDeck.addEventListener('click', setTimer);
-
-        // Validate only card clicks
-        game.ui.htmlDeck.addEventListener('click', function(event) {
-            (event.target.nodeName === "LI") ? flips(event): false;
-        });
-
-        let icons = [
+        icons: [
             'fa-diamond',
             'fa-paper-plane-o',
             'fa-anchor',
@@ -49,9 +24,59 @@
             'fa-leaf',
             'fa-bicycle',
             'fa-bomb'
-        ];
+        ],
+    }
 
-        let deck = icons.concat(icons);
+    function setStars() {
+        let star, content;
+        for (i = 0; i < 3; i++) {
+            star = document.createElement("li");
+            content = document.createElement("i");
+            content.className = "fa fa-star";
+            star.appendChild(content);
+            game.ui.stars.appendChild(star);
+        }
+    }
+
+    function resetTime() {
+        game.seconds = 0;
+        game.minutes = 0;
+        game.playerTime = 0;
+        game.t = 0;
+
+    }
+
+    function setTimer() {
+        game.ui.htmlDeck.removeEventListener('click', setTimer);
+
+        function add() {
+            game.seconds++;
+            if (game.seconds >= 60) {
+                game.seconds = 0;
+                game.minutes++;
+                if (game.minutes >= 60) {
+                    game.minutes = 0;
+                }
+            }
+            game.ui.time.textContent = (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
+            ((game.minutes === 00 && game.seconds === 31) || (game.minutes === 00 && game.seconds === 46) || (game.minutes === 01 && game.seconds === 01)) ? game.ui.stars.removeChild(game.ui.stars.lastElementChild) : false;
+            (game.minutes === 02) ? winLose() : false;
+            timer();
+            return game.playerTime = game.ui.time.textContent;
+        }
+
+        function timer() {
+            game.t = setTimeout(add, 1000);
+        }
+        timer();
+    };
+
+    function stopTime() {
+        clearTimeout(game.t);
+    }
+
+    function buildDeck() {
+        let deck = game.icons.concat(game.icons);
 
         // Shuffle function from http://stackoverflow.com/a/2450976
         function shuffle(array) {
@@ -79,47 +104,43 @@
             listItem.appendChild(content);
             game.ui.htmlDeck.appendChild(listItem);
         });
+    }
 
-        (function setStars() {
-            for (i = 0; i < 3; i++) {
-                let star = document.createElement("li"),
-                    content = document.createElement("i");
-                content.className = "fa fa-star";
-                star.appendChild(content);
-                game.ui.stars.appendChild(star);
-            }
-        })();
+    function cleanGame() {
 
-        (function resetTime() {
-            game.seconds = 0;
-            game.minutes = 0;
-            game.playerTime = 0;
-        })();
+        game.ui.htmlDeck.innerHTML = '';
+        game.ui.stars.innerHTML = '';
+        game.ui.moves.innerHTML = 0;
+        game.ui.time.innerHTML = '00:00';
+        game.open = [];
+        game.matched = [];
+        game.moveCount = 0;
+        setMoves(game.moveCount);
 
-        function setTimer() {
-            game.ui.htmlDeck.removeEventListener('click', setTimer);
+        game.ui.restart.addEventListener('click', resetGame);
 
-            function add() {
-                game.seconds++;
-                if (game.seconds >= 60) {
-                    game.seconds = 0;
-                    game.minutes++;
-                    if (game.minutes >= 60) {
-                        game.minutes = 0;
-                    }
-                }
-                game.ui.time.textContent = (game.minutes ? (game.minutes > 9 ? game.minutes : "0" + game.minutes) : "00") + ":" + (game.seconds > 9 ? game.seconds : "0" + game.seconds);
-                ((game.minutes === 00 && game.seconds === 31) || (game.minutes === 00 && game.seconds === 46) || (game.minutes === 01 && game.seconds === 01)) ? game.ui.stars.removeChild(game.ui.stars.lastElementChild) : false;
-                (game.minutes === 02) ? winLose() : false;
-                timer();
-                return game.playerTime = game.ui.time.textContent;
-            }
+        game.ui.htmlDeck.addEventListener('click', setTimer);
 
-            function timer() {
-                game.t = setTimeout(add, 1000);
-            }
-            timer();
-        };
+        // Validate only card clicks
+        game.ui.htmlDeck.addEventListener('click', function(event) {
+            (event.target.nodeName === "LI") ? flips(event): false;
+        });
+
+    }
+
+    function startGame() {
+        cleanGame();
+        buildDeck();
+        setStars();
+        resetTime();
+
+        console.log('game.open is empty upon start/restart :'); // TODO: Remove
+        console.log(game.open); // TODO: Remove
+    }
+
+    function resetGame() {
+        stopTime();
+        startGame();
 
     }
 
@@ -145,22 +166,22 @@
 
     function winLose(win) {
         let message = (win ? 'You win!' : 'Let\'s try that again...');
-
         setTimeout(function() {
+            stopTime();
             modalDisplay(message);
         }, 200);
     };
+
+    function setMoves(moves) {
+        game.ui.moves.innerHTML = game.moveCount;
+    }
 
     function moveCounter() {
         game.moveCount++;
         setMoves(game.moveCount);
     }
 
-    function setMoves(moves) {
-        game.ui.moves.innerHTML = game.moveCount;
-    }
-
-    function checkMatch(){
+    function checkMatch(){ // TODO: WHY IS OPEN[] NOT CLEARING ANYMORE?
         if (game.open.length === 2) {
             if (game.open[0].className === game.open[1].className) {
                 match(game.open);
@@ -170,6 +191,9 @@
                 moveCounter();
             }
             game.open = [];
+            console.log('game.open[]'); // TODO: Remove
+            console.log(game.open.length); // TODO: Remove
+            console.log(game.open); // TODO: Remove
         }
     }
 
@@ -187,8 +211,6 @@
     }
 
     function modalDisplay(message) {
-
-        clearTimeout(game.t);
 
         let modal = document.querySelector('.modal'),
             text = document.createElement('p'),
@@ -241,13 +263,13 @@
         modal.appendChild(content);
 
         yes.addEventListener('click', function() {
-            setBoard();
+            startGame();
         })
         buttons.addEventListener('click', function() {
             modal.classList.toggle('hide');
         });
 
     };
-    setBoard();
+    startGame();
 
 })();
